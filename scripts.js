@@ -17,38 +17,38 @@ const Modal = {
   }
 }
 
-const transactions = [
-  {
-    id: 1,
-    description: 'Luz',
-    amount: -50000,
-    date: '28/09/2021',
-  },
-  {
-    id: 2,
-    description: 'Website',
-    amount: 500000,
-    date: '28/09/2021',
-  },
-  {
-    id: 3,
-    description: 'Internet',
-    amount: -20000,
-    date: '28/09/2021',
-  },
-  {
-    id: 4,
-    description: 'App',
-    amount: 200000,
-    date: '28/09/2021',
-  },
-]
-
 const Transaction = {
-  all: transactions,
+  all: [
+    {
+      description: 'Luz',
+      amount: -50000,
+      date: '28/09/2021',
+    },
+    {
+      description: 'Website',
+      amount: 500000,
+      date: '28/09/2021',
+    },
+    {
+      description: 'Internet',
+      amount: -20000,
+      date: '28/09/2021',
+    },
+    {
+      description: 'App',
+      amount: 200000,
+      date: '28/09/2021',
+    },
+  ],
 
   add(transaction) {
     Transaction.all.push(transaction)
+    App.reload()
+  },
+
+  remove(index) {
+    Transaction.all.splice(index, 1)
+
     App.reload()
   },
 
@@ -85,6 +85,7 @@ const DOM = {
     tr.innerHTML = DOM.innerHTMLTransaction(transaction)
     DOM.transactionsContainer.appendChild(tr)
   },
+
   innerHTMLTransaction(transaction) {
     const CSSclass = transaction.amount > 0 ? "income" :
       "expense"
@@ -112,6 +113,10 @@ const DOM = {
     document
       .getElementById('totalDisplay')
       .innerHTML = Utils.formatCurrency(Transaction.total())
+  },
+
+  clearTransactions() {
+    DOM.transactionsContainer.innerHTML = ""
   }
 }
 
@@ -129,6 +134,48 @@ const Utils = {
   }
 }
 
+const Form = {
+  description: document.querySelector('input#description'),
+  amount: document.querySelector('input#amount'),
+  date: document.querySelector('input#date'),
+
+  getValues() {
+    return {
+      description: Form.description.value,
+      amount: Form.amount.value,
+      date: Form.date.value,
+    }
+  },
+  /*formatData() {
+    console.log('Formatar os dados')
+  },*/
+  validateFields() {
+    const { description, amount, date } = Form.getValues()
+
+    if (description.trim() === "" ||
+      amount.trim() === "" ||
+      date.trim() === "") {
+      throw new Error("Por favor, preencha todos os campos")
+    }
+  },
+  submit(event) {
+    event.preventDefault()
+
+    try {
+      Form.validateFields()
+
+    } catch (error) {
+      alert(error.message)
+    }
+
+    Form.formatData()
+    // salvar
+    // apagar os dados do formulário
+    // modal feche
+    // atualizar a aplicação
+  }
+}
+
 const App = {
   init() {
 
@@ -140,15 +187,11 @@ const App = {
 
   },
   reload() {
+    DOM.clearTransactions()
     App.init()
   },
 }
 
 App.init()
 
-Transaction.add({
-  id: 39,
-  description: 'Alo',
-  amount: 200,
-  date: '28/09/2021'
-})
+// 2:19:14
