@@ -28,7 +28,7 @@ body {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
 }
@@ -80,9 +80,9 @@ button:hover {
 .button.cancel {
   width: 50%;
   height: 50px;
+  color: var(--red);
   border: 2px var(--red) solid;
   border-radius: 0.25rem;
-  color: var(--red);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +118,7 @@ header {
 /* Card=======================*/
 .card {
   background: white;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
   border-radius: 0.25rem;
 
   margin-bottom: 2rem;
@@ -189,7 +189,7 @@ table tbody tr:hover {
 
 table tbody td {
   background: white;
-  padding: 0.7rem 2rem;
+  padding: 1rem 2rem;
 }
 
 td.description {
@@ -248,13 +248,14 @@ input {
   border-radius: 0.2rem;
 
   padding: 0.8rem;
+  width: 100%;
 }
 
 .input-group {
   margin-top: 0.8rem;
 }
 
-.input-group small{
+.input-group .help{
   opacity: 0.4;
 }
 
@@ -264,6 +265,7 @@ input {
   align-items: center;
 }
 
+.input-group.actions button,
 .input-group.actions button {
   width: 48%;
 }
